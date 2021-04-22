@@ -1,0 +1,9 @@
+[Unit]
+After=network.service
+
+[Service]
+ExecStart=/home/pi/.local/bin/jupyter notebook -config=/home/pi/.jupyter/jupyter_notebook_config.py
+User=pi
+
+[Install]
+WantedBy=default.target
