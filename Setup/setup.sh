@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "**********************************************************"
-echo "Welcome to your 'orcspi'
+echo "Welcome to your 'orcspi'"
 echo "**********************************************************"
 echo 
 echo "Let us setup your Raspberry Pi Zero. "
@@ -52,3 +52,13 @@ sudo raspi-config nonint do_spi 0
 
 # Cleaning up
 sudo apt-get clean
+
+# Ask if reboot
+while true; do
+    read -p "Do you wish to reboot now?" yn
+    case $yn in
+        [Yy]* ) sudo reboot; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
