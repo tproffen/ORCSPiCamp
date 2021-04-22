@@ -51,8 +51,9 @@ sudo pip3 install enviroplus
 sudo raspi-config nonint do_i2c 0
 sudo raspi-config nonint do_spi 0
 
-# Copy examples from Github
-# TBD
+# Copy Enviro examples from Github
+cd /home/pi
+git clone https://github.com/pimoroni/enviroplus-python.git
 
 # Cleaning up
 sudo apt-get clean
