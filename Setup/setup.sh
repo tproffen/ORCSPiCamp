@@ -40,6 +40,7 @@ sudo apt-get -y install python3-matplotlib python3-numpy
 sudo pip3 install jupyter
 
 mkdir -p /home/pi/.jupyter
+cd /home/pi/ORCSPiCamp/Setup
 cp jupyter_notebook_config.py /home/pi/.jupyter/
 sudo cp jupyter.service /etc/systemd/system/
 sudo systemctl enable jupyter.service
