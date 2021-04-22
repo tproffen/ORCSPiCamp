@@ -5,19 +5,21 @@ echo "Welcome to your 'orcspi'"
 echo "**********************************************************"
 echo 
 echo "Let us setup your Raspberry Pi Zero. "
-echo "Sit back and relax - this will take several minutes."
-echo 
+echo "First set a new password." 
 
 # Set new password
-echo "Orcs2021" | passwd --stdin pi
+passwd 
+
+echo "**********************************************************"
+echo "Sit back and relax - this will take several minutes."
 
 # Update hostname
 CUR_HOSTNAME=$(cat /etc/hostname)
 NEW_HOSTNAME=orcspi
 
 # Change the hostname
-hostnamectl set-hostname $NEW_HOSTNAME
-hostname $NEW_HOSTNAME
+sudo hostnamectl set-hostname $NEW_HOSTNAME
+sudo hostname $NEW_HOSTNAME
 
 # Change hostname in /etc/hosts & /etc/hostname
 sudo sed -i "s/$CUR_HOSTNAME/$NEW_HOSTNAME/g" /etc/hosts
