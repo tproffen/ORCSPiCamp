@@ -37,6 +37,7 @@ sudo apt-get -y upgrade
 sudo apt-get -y install git
 sudo apt-get -y install python3-pip
 sudo apt-get -y install python3-matplotlib python3-numpy
+sudo pip3 install jupyter
 
 mkdir -p /home/pi/.jupyter
 cp jupyter_notebook_config.py /home/pi/.jupyter/
