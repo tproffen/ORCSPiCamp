@@ -7,7 +7,6 @@ echo
 echo "Let us setup your Raspberry Pi Zero. "
 echo "First set a new password." 
 
-# Set new password
 passwd 
 
 echo "**********************************************************"
