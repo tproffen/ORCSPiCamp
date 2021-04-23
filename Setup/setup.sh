@@ -5,11 +5,12 @@ echo "Welcome to your 'orcspi'"
 echo "**********************************************************"
 echo 
 echo "Let us setup your Raspberry Pi Zero. "
-echo "Sit back and relax - this will take several minutes."
-echo 
+echo "First set a new password." 
 
-# Set new password
-echo "Orcs2021\nOrcs2021" | passwd
+passwd 
+
+echo "**********************************************************"
+echo "Sit back and relax - this will take several minutes."
 
 # Update hostname
 CUR_HOSTNAME=$(cat /etc/hostname)
@@ -35,8 +36,10 @@ sudo apt-get -y upgrade
 sudo apt-get -y install git
 sudo apt-get -y install python3-pip
 sudo apt-get -y install python3-matplotlib python3-numpy
+sudo pip3 install jupyter
 
 mkdir -p /home/pi/.jupyter
+cd /home/pi/ORCSPiCamp/Setup
 cp jupyter_notebook_config.py /home/pi/.jupyter/
 sudo cp jupyter.service /etc/systemd/system/
 sudo systemctl enable jupyter.service
@@ -47,8 +50,9 @@ sudo pip3 install enviroplus
 sudo raspi-config nonint do_i2c 0
 sudo raspi-config nonint do_spi 0
 
-# Copy examples from Github
-# TBD
+# Copy Enviro examples from Github
+cd /home/pi
+git clone https://github.com/pimoroni/enviroplus-python.git
 
 # Cleaning up
 sudo apt-get clean
