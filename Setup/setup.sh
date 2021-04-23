@@ -9,15 +9,15 @@ echo "Sit back and relax - this will take several minutes."
 echo 
 
 # Set new password
-echo "Orcs2021" | passwd --stdin pi
+echo "Orcs2021\nOrcs2021" | passwd
 
 # Update hostname
 CUR_HOSTNAME=$(cat /etc/hostname)
 NEW_HOSTNAME=orcspi
 
 # Change the hostname
-hostnamectl set-hostname $NEW_HOSTNAME
-hostname $NEW_HOSTNAME
+sudo hostnamectl set-hostname $NEW_HOSTNAME
+sudo hostname $NEW_HOSTNAME
 
 # Change hostname in /etc/hosts & /etc/hostname
 sudo sed -i "s/$CUR_HOSTNAME/$NEW_HOSTNAME/g" /etc/hosts
