@@ -2,7 +2,7 @@
 After=network.service
 
 [Service]
-ExecStart=/usr/local/bin/jupyter notebook -config=/home/pi/.jupyter/jupyter_notebook_config.py
+ExecStart=/usr/local/bin/jupyter notebook --config=/home/pi/.jupyter/jupyter_notebook_config.py
 User=pi
 
 [Install]

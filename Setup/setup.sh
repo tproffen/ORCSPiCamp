@@ -47,13 +47,12 @@ sudo systemctl enable jupyter.service
 sudo systemctl start jupyter.service
 
 # Enviro setup
+sudo apt-get -y install python3-rpi.gpio
+sudo apt-get -y install python3-smbus
+
 sudo pip3 install enviroplus
 sudo raspi-config nonint do_i2c 0
 sudo raspi-config nonint do_spi 0
-
-# Copy Enviro examples from Github
-cd /home/pi
-git clone https://github.com/pimoroni/enviroplus-python.git
 
 # Cleaning up
 sudo apt-get clean
