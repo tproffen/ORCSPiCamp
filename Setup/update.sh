@@ -8,7 +8,7 @@ echo "Updating .."
 
 # Update distribtion
 sudo apt-get update
-sudo apt-get -y upgrade
+#sudo apt-get -y upgrade
 
 # Missing components here
 
