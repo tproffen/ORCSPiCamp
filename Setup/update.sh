@@ -1,17 +1,11 @@
 #!/bin/bash
 
+# None for now
+
+# Done
 echo "**********************************************************"
-echo "Welcome to your 'orcspi'"
+echo "Update finished"
 echo "**********************************************************"
-echo 
-echo "Updating .."
 
-# Update distribtion
-sudo apt-get update
-#sudo apt-get -y upgrade
 
-# Missing components here
-
-# Cleaning up
-sudo apt-get clean
 
