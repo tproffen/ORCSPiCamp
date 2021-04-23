@@ -1,4 +1,4 @@
-<a href="http://www.orcsgirls.org"><img src="Images/Logo.png" align="right" width="150px"></a>
+<a href="http://www.orcsgirls.org"><img src="https://github.com/tproffen/ORCSGirlsPython/raw/master/Images/Logo.png" align="right" width="150px"></a>
 
 # ORCSPiCamp
 
