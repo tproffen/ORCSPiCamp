@@ -53,6 +53,8 @@ sudo pip3 install enviroplus
 sudo raspi-config nonint do_i2c 0
 sudo raspi-config nonint do_spi 0
 
+sudo pip3 install adafruit-io
+
 # Cleaning up
 sudo apt-get clean
 
