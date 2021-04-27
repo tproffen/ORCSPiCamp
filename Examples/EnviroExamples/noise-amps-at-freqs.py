@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import ST7735
 from PIL import Image, ImageDraw
 from enviroplus.noise import Noise
