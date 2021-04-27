@@ -36,7 +36,10 @@ sudo apt-get -y upgrade
 sudo apt-get -y install git
 sudo apt-get -y install python3-pip
 sudo apt-get -y install python3-matplotlib python3-numpy
+sudo pip3 install --upgrade setuptools
 sudo pip3 install jupyter
+sudo pip3 install jupyterlab
+sudo pip3 install jupyterthemes
 
 mkdir -p /home/pi/.jupyter
 cd /home/pi/ORCSPiCamp/Setup
