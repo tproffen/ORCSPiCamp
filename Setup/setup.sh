@@ -55,8 +55,17 @@ sudo raspi-config nonint do_spi 0
 
 sudo pip3 install adafruit-io
 
+sudo apt-get -y install libportaudio2
+sudo pip3 install sounddevice
+
 # Cleaning up
 sudo apt-get clean
+
+# Enable the I2C MEMS microphone (only needed for noise examples)
+cd /tmp
+sudo pip3 install --upgrade adafruit-python-shell
+wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/i2smic.py
+sudo python3 i2smic.py
 
 # Ask if reboot
 while true; do
