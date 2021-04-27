@@ -14,7 +14,7 @@ def get_ip_address():
     return s.getsockname()[0]
 
 def get_ssid():
-    ssid="Not found"
+    ssid="None"
     scanoutput = check_output(["iwlist", "wlan0", "scan"])
     for line in scanoutput.split():
         if line.startswith(b'ESSID'):
@@ -37,15 +37,10 @@ disp.begin()
 WIDTH = disp.width
 HEIGHT = disp.height
 
-# New canvas to draw on.
-img = Image.new('RGB', (WIDTH, HEIGHT), color=(0, 0, 0))
-draw = ImageDraw.Draw(img)
-# New canvas to draw on.
-back_colour = (0, 60, 20)
-
 dirname = os.path.dirname(__file__)
 background = os.path.join(dirname, 'background.png')
 img = Image.open(background)
+img = img.resize((WIDTH, HEIGHT))
 draw = ImageDraw.Draw(img)
 
 # Output text
@@ -57,6 +52,7 @@ myssid="SSID: "+get_ssid()
 font_size = 14
 font = ImageFont.truetype(UserFont, font_size)
 text_colour = (255, 255, 255)
+back_colour = (0, 60, 20)
 size_x, size_y = draw.textsize(myip, font)
 margin = 5
 
@@ -68,4 +64,4 @@ draw.text((margin, margin+2.5*size_y), myip, font=font, fill=text_colour)
 draw.text((margin, margin+3.75*size_y), myssid[:17], font=font, fill=text_colour)
 
 disp.display(img)
-
+print ("Welcome display finished.")
