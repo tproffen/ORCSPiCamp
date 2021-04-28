@@ -1,67 +1,67 @@
 #!/usr/bin/env python3
-
+#----------------------------------------------------------------------
 import ST7735
 from PIL import Image, ImageDraw, ImageFont
 from fonts.ttf import RobotoMedium as UserFont
-import socket
-from subprocess import check_output
-import datetime
+import subprocess
+import time
 import os
 
-def get_ip_address():
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(("8.8.8.8", 80))
-    return s.getsockname()[0]
+disp = ST7735.ST7735(port=0,cs=1,dc=9,backlight=12,rotation=270,
+                     spi_speed_hz=10000000)
 
-def get_ssid():
-    ssid="None"
-    scanoutput = check_output(["iwlist", "wlan0", "scan"])
-    for line in scanoutput.split():
-        if line.startswith(b'ESSID'):
-            ssid = line.split(b'"')[1].decode("utf-8") 
-    return ssid
+#----------------------------------------------------------------------
+# Settings
+#----------------------------------------------------------------------
 
-disp = ST7735.ST7735(
-    port=0,
-    cs=1,
-    dc=9,
-    backlight=12,
-    rotation=270,
-    spi_speed_hz=10000000
-)
+back_colour = (0, 60, 20)
+text_colour = (255, 255, 255)
+font_size   = 14
+logo_img    = 'background.png'
+m           = 5
 
-# Initialize display.
+#----------------------------------------------------------------------
+cmd = "hostname -I | cut -d\' \' -f1"
+IP = subprocess.check_output(cmd, shell = True )
+ip = "IP: "+IP.decode('utf-8', 'ignore')
+
+#----------------------------------------------------------------------
 disp.begin()
 
 # Width and height to calculate text position.
-WIDTH = disp.width
-HEIGHT = disp.height
+
+w = disp.width
+h = disp.height
+
+# Setup and loading background
 
 dirname = os.path.dirname(__file__)
-background = os.path.join(dirname, 'background.png')
-img = Image.open(background)
-img = img.resize((WIDTH, HEIGHT))
+background = os.path.join(dirname, logo_img)
+logo = Image.open(background)
+
+# Create new image, set color and paste logo
+
+img = Image.new('RGBA', (w, h))
 draw = ImageDraw.Draw(img)
 
-# Output text
-header="ORCSPiCamp 2021"
-myip="IP: "+get_ip_address()
-myssid="SSID: "+get_ssid()
-
 # Text settings
-font_size = 14
+
 font = ImageFont.truetype(UserFont, font_size)
-text_colour = (255, 255, 255)
-back_colour = (0, 60, 20)
-size_x, size_y = draw.textsize(myip, font)
-margin = 5
+size_x, size_y = draw.textsize('text', font)
+
+#----------------------------------------------------------------------
+# Welcome screen
+#----------------------------------------------------------------------
+draw.rectangle((0, 0, w, h), back_colour)
+img.paste(logo,(0,0), mask=logo)
 
 # Draw background rectangle and write text.
-back_colour = (0, 60, 20)
-draw.rectangle((0, 0, 160, size_y+2*margin), back_colour)
-draw.text((margin, margin), header, font=font, fill=text_colour)
-draw.text((margin, margin+2.5*size_y), myip, font=font, fill=text_colour)
-draw.text((margin, margin+3.75*size_y), myssid[:17], font=font, fill=text_colour)
+draw.text((m, m), "ORCSPICamp 2021", font=font, fill=text_colour)
+draw.text((m, m+1.50*size_y), "Welcome :)", font=font, fill=text_colour)
+draw.text((m, m+3.75*size_y), ip, font=font, fill=text_colour)
 
+#----------------------------------------------------------------------
 disp.display(img)
 print ("Welcome display finished.")
+
+
