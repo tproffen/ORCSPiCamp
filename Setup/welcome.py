@@ -6,6 +6,7 @@ from fonts.ttf import RobotoMedium as UserFont
 import subprocess
 import time
 import os
+import re
 
 disp = ST7735.ST7735(port=0,cs=1,dc=9,backlight=12,rotation=270,
                      spi_speed_hz=10000000)
@@ -21,10 +22,16 @@ logo_img    = 'background.png'
 m           = 5
 
 #----------------------------------------------------------------------
-cmd = "hostname -I | cut -d\' \' -f1"
-IP = subprocess.check_output(cmd, shell = True )
-ip = "IP: "+IP.decode('utf-8', 'ignore')
+def checkConnection():
+  cmd = "hostname -I | cut -d\' \' -f1"
+  IP = subprocess.check_output(cmd, shell = True )
+  ip = IP.decode('utf-8', 'ignore')
 
+  cmd = "nmcli conn show | sed '1d' | awk '{print $1}' -"
+  WIFI = subprocess.check_output(cmd, shell = True )
+  wifi = WIFI.decode('utf-8', 'ignore')
+
+  return(wifi,ip)
 #----------------------------------------------------------------------
 disp.begin()
 
@@ -54,14 +61,24 @@ size_x, size_y = draw.textsize('text', font)
 #----------------------------------------------------------------------
 draw.rectangle((0, 0, w, h), back_colour)
 img.paste(logo,(0,0), mask=logo)
-
-# Draw background rectangle and write text.
 draw.text((m, m), "ORCSPICamp 2021", font=font, fill=text_colour)
-draw.text((m, m+1.50*size_y), "Welcome :)", font=font, fill=text_colour)
-draw.text((m, m+3.75*size_y), ip, font=font, fill=text_colour)
+draw.text((m, m+4.0*size_y), 'Not connected', font=font, fill=text_colour)
+disp.display(img)
 
 #----------------------------------------------------------------------
+# Waiting for WiFi connection
+#----------------------------------------------------------------------
+
+(wifi, ip) = checkConnection()
+while not (re.search('[a-zA-Z]', wifi) and re.search('[0-9]',ip)):
+  time.sleep(0.2)
+  (wifi, ip) = checkConnection()
+
+draw.rectangle((0, 0, w, h), back_colour)
+img.paste(logo,(0,0), mask=logo)
+draw.text((m, m), "ORCSPICamp 2021", font=font, fill=text_colour)
+draw.text((m, m+2.5*size_y), "WIFI: "+wifi[:17], font=font, fill=text_colour)
+draw.text((m, m+4.0*size_y), "IP: "+ip, font=font, fill=text_colour)
 disp.display(img)
-print ("Welcome display finished.")
 
 
