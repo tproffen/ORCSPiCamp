@@ -17,6 +17,8 @@ disp = ST7735.ST7735(port=0,cs=1,dc=9,backlight=12,rotation=270,
 
 back_colour = (0, 60, 20)
 text_colour = (255, 255, 255)
+head_colour = (255, 255,   0)
+warn_colour = (255,  50,  50)
 font_size   = 14
 logo_img    = 'background.png'
 m           = 5
@@ -61,8 +63,8 @@ size_x, size_y = draw.textsize('text', font)
 #----------------------------------------------------------------------
 draw.rectangle((0, 0, w, h), back_colour)
 img.paste(logo,(0,0), mask=logo)
-draw.text((m, m), "ORCSPICamp 2021", font=font, fill=text_colour)
-draw.text((m, m+4.0*size_y), 'Not connected', font=font, fill=text_colour)
+draw.text((m, m), "ORCSPICamp 2021", font=font, fill=head_colour)
+draw.text((m, m+4.0*size_y), 'Not connected', font=font, fill=warn_colour)
 disp.display(img)
 
 #----------------------------------------------------------------------
@@ -71,12 +73,12 @@ disp.display(img)
 
 (wifi, ip) = checkConnection()
 while not (re.search('[a-zA-Z]', wifi) and re.search('[0-9]',ip)):
-  time.sleep(0.2)
+  time.sleep(0.5)
   (wifi, ip) = checkConnection()
 
 draw.rectangle((0, 0, w, h), back_colour)
 img.paste(logo,(0,0), mask=logo)
-draw.text((m, m), "ORCSPICamp 2021", font=font, fill=text_colour)
+draw.text((m, m), "ORCSPICamp 2021", font=font, fill=head_colour)
 draw.text((m, m+2.5*size_y), "WIFI: "+wifi[:17], font=font, fill=text_colour)
 draw.text((m, m+4.0*size_y), "IP: "+ip, font=font, fill=text_colour)
 disp.display(img)
