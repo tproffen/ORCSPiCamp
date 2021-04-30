@@ -25,7 +25,7 @@ m           = 5
 
 #----------------------------------------------------------------------
 def checkConnection():
-  cmd = "hostname -I | cut -d\' \' -f1"
+  cmd = "hostname -I | awk '{print $1}' -"
   IP = subprocess.check_output(cmd, shell = True )
   ip = IP.decode('utf-8', 'ignore')
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -14,7 +16,7 @@ disp = ST7735.ST7735(
     cs=ST7735.BG_SPI_CS_FRONT,  # BG_SPI_CSB_BACK or BG_SPI_CS_FRONT
     dc=9,
     backlight=19,               # 18 for back BG slot, 19 for front BG slot.
-    rotation=90,
+    rotation=270,
     spi_speed_hz=10000000
 )
 
