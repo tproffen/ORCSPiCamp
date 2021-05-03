@@ -1,11 +1,6 @@
 #!/bin/bash
+echo "Checking for new packages."
 
 # None for now
-
-# Done
-echo "**********************************************************"
-echo "Update finished"
-echo "**********************************************************"
-
 
 
