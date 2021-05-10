@@ -10,7 +10,6 @@ import re
 
 disp = ST7735.ST7735(port=0,cs=1,dc=9,backlight=12,rotation=270,
                      spi_speed_hz=10000000)
-disp.clear()
 
 #----------------------------------------------------------------------
 # Settings
@@ -35,6 +34,7 @@ def checkConnection():
   wifi = WIFI.decode('utf-8', 'ignore')
 
   return(wifi,ip)
+
 #----------------------------------------------------------------------
 disp.begin()
 
