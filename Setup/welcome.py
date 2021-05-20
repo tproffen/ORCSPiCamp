@@ -73,7 +73,8 @@ disp.display(img)
 #----------------------------------------------------------------------
 
 (wifi, ip) = checkConnection()
-while not (re.search('[a-zA-Z]', wifi) and re.search('[0-9]',ip)):
+while not (re.search('[a-zA-Z]', wifi) and 
+           re.search('^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$',ip)):
   time.sleep(0.5)
   (wifi, ip) = checkConnection()
 
