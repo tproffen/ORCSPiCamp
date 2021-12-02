@@ -20,6 +20,7 @@ text_colour = (255, 255, 255)
 head_colour = (255, 255,   0)
 warn_colour = (255,  50,  50)
 font_size   = 14
+font_size_s = 14
 logo_img    = 'background.png'
 m           = 5
 
@@ -29,9 +30,11 @@ def checkConnection():
   IP = subprocess.check_output(cmd, shell = True )
   ip = IP.decode('utf-8', 'ignore')
 
-  cmd = "nmcli conn show | sed '1d' | awk '{print $1}' -"
+  cmd = "iwgetid wlan0 --raw"
   WIFI = subprocess.check_output(cmd, shell = True )
   wifi = WIFI.decode('utf-8', 'ignore')
+  wifi = wifi.strip()
+  ip   = ip.strip()
 
   return(wifi,ip)
 
@@ -57,6 +60,7 @@ draw = ImageDraw.Draw(img)
 # Text settings
 
 font = ImageFont.truetype(UserFont, font_size)
+font_s = ImageFont.truetype(UserFont, font_size_s)
 size_x, size_y = draw.textsize('text', font)
 
 #----------------------------------------------------------------------
@@ -82,7 +86,7 @@ draw.rectangle((0, 0, w, h), back_colour)
 img.paste(logo,(0,0), mask=logo)
 draw.text((m, m), "ORCSPICamp 2021", font=font, fill=head_colour)
 draw.text((m, m+2.5*size_y), "WIFI: "+wifi[:17], font=font, fill=text_colour)
-draw.text((m, m+4.0*size_y), "IP: "+ip, font=font, fill=text_colour)
+draw.text((m, m+4.0*size_y), "IP: "+ip, font=font_s, fill=text_colour)
 disp.display(img)
 
 
