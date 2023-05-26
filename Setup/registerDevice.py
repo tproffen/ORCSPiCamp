@@ -1,12 +1,28 @@
 import socket
+import subprocess
 import os
 import requests
 
-host_name = socket.gethostname()
-host_ip = socket.gethostbyname(host_name)
-ssid=os.popen("sudo iwgetid -r").read()
+#----------------------------------------------------------------------
+def checkConnection():
+  hostname = socket.gethostname()
+  cmd = "hostname -I | awk '{print $1}' -"
+  IP = subprocess.check_output(cmd, shell = True )
+  ip = IP.decode('utf-8', 'ignore')
+
+  cmd = "iwgetid wlan0 --raw"
+  WIFI = subprocess.check_output(cmd, shell = True )
+  wifi = WIFI.decode('utf-8', 'ignore')
+  wifi = wifi.strip()
+  ip   = ip.strip()
+
+  return(wifi,ip,hostname)
+
+#----------------------------------------------------------------------
 
 url = 'https://data.orcsgirls.org/devices.php'
 key = 'ORCS2023'
-mydata = [('Hostname', host_name),('IPAddress', host_ip),('WiFiName', ssid),('Key', key)]
+(wifi,ip,hostname)=checkConnection();
+mydata = [('Hostname', hostname),('IPAddress', ip),('WiFiName', wifi),('Key', key)]
+
 response=requests.post(url, data=mydata)

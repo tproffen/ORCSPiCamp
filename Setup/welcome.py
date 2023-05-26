@@ -4,6 +4,8 @@ import ST7735
 from PIL import Image, ImageDraw, ImageFont
 from fonts.ttf import RobotoMedium as UserFont
 import subprocess
+import requests
+import socket
 import time
 import os
 import re
@@ -26,6 +28,7 @@ m           = 5
 
 #----------------------------------------------------------------------
 def checkConnection():
+  hostname = socket.gethostname()
   cmd = "hostname -I | awk '{print $1}' -"
   IP = subprocess.check_output(cmd, shell = True )
   ip = IP.decode('utf-8', 'ignore')
@@ -36,7 +39,7 @@ def checkConnection():
   wifi = wifi.strip()
   ip   = ip.strip()
 
-  return(wifi,ip)
+  return(wifi,ip,hostname)
 
 #----------------------------------------------------------------------
 disp.begin()
@@ -76,11 +79,11 @@ disp.display(img)
 # Waiting for WiFi connection
 #----------------------------------------------------------------------
 
-(wifi, ip) = checkConnection()
+(wifi,ip,hostname)=checkConnection();
 while not (re.search('[a-zA-Z]', wifi) and 
            re.search('^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$',ip)):
   time.sleep(0.5)
-  (wifi, ip) = checkConnection()
+  (wifi,ip,hostname)=checkConnection();
 
 draw.rectangle((0, 0, w, h), back_colour)
 img.paste(logo,(0,0), mask=logo)
@@ -89,4 +92,10 @@ draw.text((m, m+2.5*size_y), "WIFI: "+wifi[:17], font=font, fill=text_colour)
 draw.text((m, m+4.0*size_y), "IP: "+ip, font=font_s, fill=text_colour)
 disp.display(img)
 
+#----------------------------------------------------------------------
 
+url = 'https://data.orcsgirls.org/devices.php'
+key = 'ORCS2023'
+mydata = [('Hostname', hostname),('IPAddress', ip),('WiFiName', wifi),('Key', key)]
+
+response=requests.post(url, data=mydata)
