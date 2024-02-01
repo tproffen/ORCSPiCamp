@@ -18,7 +18,6 @@ c.NotebookApp.ip = '0.0.0.0'
 c.NotebookApp.port = 5555
 c.Notebook.open_browser = False
 c.NotebookApp.quit_button = False
-rojects/'
 EOF
 
 cat > jupyter.service << EOF
