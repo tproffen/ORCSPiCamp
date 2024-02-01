@@ -14,7 +14,7 @@ cat > jupyter.service << EOF
 After=network.service
 
 [Service]
-ExecStart=/usr/local/bin/jupyter lab --ip 0.0.0.0 --port 5555 --no-browser --allow-root
+ExecStart=/usr/local/bin/jupyter lab --ip 0.0.0.0 --port 5555 --no-browser --ServerApp.root_dir='/home/pi/'
 User=pi
 
 [Install]
